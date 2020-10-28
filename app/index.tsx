@@ -3,7 +3,6 @@ import { render } from 'react-dom';
 import { AppContainer as ReactHotAppContainer } from 'react-hot-loader';
 import { history, configuredStore } from './store';
 import './app.global.css';
-import 'bulma/css/bulma.min.css';
 
 const store = configuredStore();
 

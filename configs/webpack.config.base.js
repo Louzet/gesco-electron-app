@@ -41,6 +41,7 @@ export default {
   plugins: [
     new webpack.EnvironmentPlugin({
       NODE_ENV: 'production',
+      API_ENTRYPOINT: 'http://localhost:8000/api',
     }),
 
     new webpack.NamedModulesPlugin(),

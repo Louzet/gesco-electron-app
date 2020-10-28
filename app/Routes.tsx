@@ -1,28 +1,51 @@
 /* eslint react/jsx-props-no-spreading: off */
-import React from 'react';
+import React, { FC, useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import { Switch, Route } from 'react-router-dom';
+
 import routes from './constants/routes.json';
+
 import App from './containers/App';
+
+import Header from './components/Include/Header';
+
 import HomePage from './containers/HomePage';
+import LoginPage from './containers/LoginPage';
+import DashboardPage from './containers/DashboardPage';
 
-// Lazily load routes and code split with webpack
-const LazyCounterPage = React.lazy(() =>
-  import(/* webpackChunkName: "CounterPage" */ './containers/CounterPage')
-);
+import PrivateRoute from './components/Auth/PrivateRoute';
+import PublicRoute from './components/Auth/PublicRoute';
 
-const CounterPage = (props: Record<string, any>) => (
-  <React.Suspense fallback={<h1>Loading...</h1>}>
-    <LazyCounterPage {...props} />
-  </React.Suspense>
-);
+import Loader from './components/UI/Loader';
 
-export default function Routes() {
+import { setLoading } from './actions/AuthAction';
+
+import { RootState } from './store';
+
+const Routes: FC = () => {
+  const dispatch = useDispatch();
+  const { loading } = useSelector((state: RootState) => state.auth);
+
+  // check if user exists
+  useEffect(() => {
+    dispatch(setLoading(true));
+    dispatch(setLoading(false));
+  }, [dispatch]);
+
+  if (loading) {
+    return <Loader />;
+  }
+
   return (
     <App>
+      <Header />
       <Switch>
-        <Route path={routes.COUNTER} component={CounterPage} />
-        <Route path={routes.HOME} component={HomePage} />
+        <PublicRoute path={routes.LOGIN} component={LoginPage} exact />
+        <PrivateRoute path={routes.HOME} component={HomePage} exact />
+        <PrivateRoute path={routes.DASHBOARD} component={DashboardPage} exact />
       </Switch>
     </App>
   );
-}
+};
+
+export default Routes;
