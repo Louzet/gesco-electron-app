@@ -1,33 +1,24 @@
-import React, { FC, useState, useEffect, FormEvent } from 'react';
+import React, { FC, useState, FormEvent } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 
 import Button from '../components/UI/Button';
 import Input from '../components/UI/Input';
 import Flash from '../components/UI/Flash';
 
-import { login, setError } from '../actions/AuthAction';
+import { login } from '../actions/AuthAction';
 import { RootState } from '../store';
 
 const LoginPage: FC = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-  const [loading, setLoading] = useState(false);
 
-  const { error } = useSelector((state: RootState) => state.auth);
+  const { error, loading } = useSelector((state: RootState) => state.auth);
+
   const dispatch = useDispatch();
-
-  useEffect(() => {
-    return () => {
-      if (error.message) {
-        dispatch(setError(0, ''));
-      }
-    };
-  }, [error, dispatch]);
 
   const submitHandler = (e: FormEvent) => {
     e.preventDefault();
-    setLoading(true);
-    dispatch(login({ email, password }, () => setLoading(false)));
+    dispatch(login({ email, password }));
   };
 
   return (
@@ -37,7 +28,7 @@ const LoginPage: FC = () => {
           Connectez vous
         </h2>
         <form className="form" onSubmit={submitHandler}>
-          {error === '' && <Flash type="error" message={error.message} />}
+          {error.message && <Flash type="danger" message={error.message} />}
 
           {/* Email */}
           <Input

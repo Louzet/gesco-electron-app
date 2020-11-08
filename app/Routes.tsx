@@ -1,12 +1,11 @@
 /* eslint react/jsx-props-no-spreading: off */
-import React, { FC, useEffect } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
-import { Switch, Route } from 'react-router-dom';
+import React, { FC } from 'react';
+import { Switch } from 'react-router-dom';
+import { useDispatch } from 'react-redux';
 
 import routes from './constants/routes.json';
 
 import App from './containers/App';
-
 import Header from './components/Include/Header';
 
 import HomePage from './containers/HomePage';
@@ -16,24 +15,21 @@ import DashboardPage from './containers/DashboardPage';
 import PrivateRoute from './components/Auth/PrivateRoute';
 import PublicRoute from './components/Auth/PublicRoute';
 
-import Loader from './components/UI/Loader';
-
-import { setLoading } from './actions/AuthAction';
-
-import { RootState } from './store';
+import {
+  isAuthenticated,
+  setLogout,
+  setCurrentUser,
+} from './actions/AuthAction';
+import { User } from './constants/types/AuthType';
 
 const Routes: FC = () => {
   const dispatch = useDispatch();
-  const { loading } = useSelector((state: RootState) => state.auth);
 
-  // check if user exists
-  useEffect(() => {
-    dispatch(setLoading(true));
-    dispatch(setLoading(false));
-  }, [dispatch]);
-
-  if (loading) {
-    return <Loader />;
+  if (isAuthenticated()) {
+    const user: User | null = JSON.parse(window.localStorage.user || '{}');
+    dispatch(setCurrentUser(user));
+  } else {
+    dispatch(setLogout());
   }
 
   return (

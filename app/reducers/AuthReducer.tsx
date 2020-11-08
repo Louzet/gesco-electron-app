@@ -1,9 +1,9 @@
 import {
   AuthAction,
   AuthState,
-  AUTH_SET_USER,
+  AUTH_SET_CURRENT_USER,
   AUTH_SET_LOADING,
-  AUTH_SET_SIGN_OUT,
+  AUTH_SET_LOGOUT,
   AUTH_SET_REQUEST,
   AUTH_SET_ERROR,
   AUTH_SET_SUCCESS,
@@ -11,6 +11,7 @@ import {
 
 const initialState: AuthState = {
   user: null,
+  credentials: {},
   authenticated: false,
   loading: false,
   error: {
@@ -25,18 +26,14 @@ const initialState: AuthState = {
 
 export default (state = initialState, action: AuthAction) => {
   switch (action.type) {
-    case AUTH_SET_USER:
+    case AUTH_SET_CURRENT_USER:
       return {
         ...state,
         user: action.payload,
         authenticated: true,
+        loading: false,
       };
-    case AUTH_SET_LOADING:
-      return {
-        ...state,
-        loading: action.payload,
-      };
-    case AUTH_SET_SIGN_OUT:
+    case AUTH_SET_LOGOUT:
       return {
         ...state,
         user: null,
@@ -46,8 +43,14 @@ export default (state = initialState, action: AuthAction) => {
     case AUTH_SET_REQUEST:
       return {
         ...state,
+        loading: true,
+        credentials: action.payload,
+      };
+    case AUTH_SET_LOADING:
+      return {
+        ...state,
         loading: action.payload,
-      }
+      };
     case AUTH_SET_ERROR:
       return {
         ...state,
