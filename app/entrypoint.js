@@ -1,2 +1,3 @@
-export const APP_ENTRYPOINT = process.env.REACT_APP_ENTRYPOINT;
-export const API_ENTRYPOINT = process.env.REACT_APP_API_ENTRYPOINT;
+export const APP_ENTRYPOINT = 'http://localhost:8000';
+export const API_ENTRYPOINT = `${APP_ENTRYPOINT}/api/`;
+export const API_LOGIN = `${API_ENTRYPOINT}/login_check`;

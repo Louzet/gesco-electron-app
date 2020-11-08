@@ -1,9 +1,9 @@
-export const AUTH_SET_USER = 'AUTH_SET_USER';
+export const AUTH_SET_CURRENT_USER = 'AUTH_SET_CURRENT_USER';
 export const AUTH_SET_REQUEST = 'AUTH_SET_REQUEST';
 export const AUTH_SET_SUCCESS = 'AUTH_SET_SUCCESS';
 export const AUTH_SET_ERROR = 'AUTH_SET_ERROR';
 export const AUTH_SET_LOADING = 'AUTH_SET_LOADING';
-export const AUTH_SET_SIGN_OUT = 'AUTH_SET_SIGN_OUT';
+export const AUTH_SET_LOGOUT = 'AUTH_SET_LOGOUT';
 
 export interface User {
   id: number;
@@ -12,10 +12,13 @@ export interface User {
   email: string;
   sex: string;
   createdAt: Date | string;
+  iat: number;
+  exp: number;
 }
 
 export interface AuthState {
   user: User | null;
+  credentials: Record<string, string>;
   authenticated: boolean;
   loading: boolean;
   error: {
@@ -34,9 +37,9 @@ export interface LoginData {
 }
 
 // ACTIONS
-interface SetUserAction {
-  type: typeof AUTH_SET_USER;
-  payload: User;
+interface SetCurrentUserAction {
+  type: typeof AUTH_SET_CURRENT_USER;
+  payload: User | null;
 }
 
 interface SetLoadingAction {
@@ -51,11 +54,11 @@ interface SetErrorAction {
 
 interface SetRequestAction {
   type: typeof AUTH_SET_REQUEST;
-  payload: boolean;
+  payload: LoginData;
 }
 
-interface SetSignOutAction {
-  type: typeof AUTH_SET_SIGN_OUT;
+interface SetLogoutAction {
+  type: typeof AUTH_SET_LOGOUT;
 }
 
 interface SetSuccessAction {
@@ -64,9 +67,9 @@ interface SetSuccessAction {
 }
 
 export type AuthAction =
-  | SetUserAction
+  | SetCurrentUserAction
   | SetLoadingAction
-  | SetSignOutAction
+  | SetLogoutAction
   | SetRequestAction
   | SetErrorAction
   | SetSuccessAction;

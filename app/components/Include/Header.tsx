@@ -4,7 +4,7 @@ import { useSelector, useDispatch } from 'react-redux';
 
 import Button from '../UI/Button';
 import { RootState } from '../../store';
-import { logout } from '../../actions/AuthAction';
+import { setLogout } from '../../actions/AuthAction';
 
 const Header: FC = () => {
   const history = useHistory();
@@ -12,24 +12,22 @@ const Header: FC = () => {
   const { authenticated } = useSelector((state: RootState) => state.auth);
 
   const logoutClickHandler = () => {
-    dispatch(logout());
+    dispatch(setLogout());
+    history.push('/');
   };
 
   return (
     <nav className="navbar is-spaced has-shadow">
       <div className="container">
         <div className="navbar-brand">
-          <Link
-            className="navbar-item"
-            to={!authenticated ? '/' : '/dashboard'}
-          >
+          <Link className="navbar-item" to={!authenticated ? '/login' : '/'}>
             AppName
           </Link>
         </div>
         <div className="navbar-end">
           <div className="navbar-items">
             <Button
-              text="Connectez-vous"
+              text={!authenticated ? 'Connexion' : 'Deconnexion'}
               onClick={logoutClickHandler}
               className="is-primary"
             />

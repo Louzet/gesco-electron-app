@@ -5,7 +5,6 @@ import { history, configuredStore } from './store';
 import './app.global.css';
 
 const store = configuredStore();
-
 const AppContainer = process.env.PLAIN_HMR ? Fragment : ReactHotAppContainer;
 
 document.addEventListener('DOMContentLoaded', () => {
