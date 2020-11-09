@@ -5,12 +5,11 @@ import { History } from 'history';
 import counterReducer from './features/counter/counterSlice';
 import authReducer from './reducers/AuthReducer';
 
-const createRootReducer: any = (history: History) => {
-  return combineReducers({
+const createRootReducer = (history: History) =>
+  combineReducers({
     router: connectRouter(history),
     counter: counterReducer,
     auth: authReducer,
   });
-};
 
 export default createRootReducer;
