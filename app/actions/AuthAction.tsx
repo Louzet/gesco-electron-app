@@ -1,6 +1,6 @@
 import { ThunkAction } from 'redux-thunk';
 import axios from 'axios';
-import jwtDecode from 'jwt-decode';
+import jwt_decode from 'jwt-decode';
 
 import { API_LOGIN } from '../entrypoint';
 import {
@@ -146,10 +146,10 @@ export const isAuthenticated = () => {
     return false;
   }
 
-  let decoded;
+  let decoded: User;
 
   try {
-    decoded = jwtDecode(token);
+    decoded = jwt_decode(token) as User;
     const { exp: expiration } = decoded;
     const currentDate = new Date();
 

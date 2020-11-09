@@ -8,20 +8,27 @@ import {
   AUTH_SET_ERROR,
   AUTH_SET_SUCCESS,
 } from '../constants/types/AuthType';
+import { ErrorResponse, SuccessResponse } from '../constants/Common';
+
+const errorResponse: ErrorResponse = {
+  type: 'error',
+  code: 0,
+  message: '',
+};
+
+const successResponse: SuccessResponse = {
+  type: 'success',
+  code: 200,
+  message: '',
+};
 
 const initialState: AuthState = {
   user: null,
   credentials: {},
   authenticated: false,
   loading: false,
-  error: {
-    code: 0,
-    message: '',
-  },
-  success: {
-    code: 0,
-    message: '',
-  },
+  error: errorResponse,
+  success: successResponse,
 };
 
 export default (state = initialState, action: AuthAction) => {
