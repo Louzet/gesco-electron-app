@@ -8,11 +8,14 @@ import Flash from '../components/UI/Flash';
 import { login } from '../actions/AuthAction';
 import { RootState } from '../store';
 
+import { ErrorResponse } from '../constants/Common';
+
 const LoginPage: FC = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
 
-  const { error, loading } = useSelector((state: RootState) => state.auth);
+  const error: ErrorResponse = useSelector((state: RootState) => state.auth);
+  const loading: boolean = useSelector((state: RootState) => state.auth);
 
   const dispatch = useDispatch();
 

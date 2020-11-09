@@ -5,6 +5,7 @@ import { Route, Redirect, RouteProps } from 'react-router-dom';
 import { RootState } from '../../store';
 
 interface Props extends RouteProps {
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   component: any;
 }
 

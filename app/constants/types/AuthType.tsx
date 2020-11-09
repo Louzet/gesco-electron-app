@@ -1,3 +1,5 @@
+import { ErrorResponse, SuccessResponse } from '../Common';
+
 export const AUTH_SET_CURRENT_USER = 'AUTH_SET_CURRENT_USER';
 export const AUTH_SET_REQUEST = 'AUTH_SET_REQUEST';
 export const AUTH_SET_SUCCESS = 'AUTH_SET_SUCCESS';
@@ -21,14 +23,8 @@ export interface AuthState {
   credentials: Record<string, string>;
   authenticated: boolean;
   loading: boolean;
-  error: {
-    code: number;
-    message: string;
-  };
-  success: {
-    code: number;
-    message: string;
-  };
+  error: ErrorResponse;
+  success: SuccessResponse;
 }
 
 export interface LoginData {
